@@ -13,14 +13,43 @@
   </div>
 
   <form action="site.php" method="post">
+
     How much was the bill total?
     <br>
-    $<input type="number" name="bill"/>
+    $<input type="float" name="bill"/>
+    <br><br>
+
+    What percentage would you like to tip?
+    <br>
+    <input type="float" name="tipPercentage"/>%
+    <br><br>
+
+    How many people are in your group?
+    <br>
+    <input type="number" name="people"/> people
+    <br><br>
+
+    <button type="submit">Calculate</button>
+    <br><br>
+
   </form>
 
-  <?php 
+  <hr>
 
-  ?>
+  <div class="results">
+    <?php 
+      $bill = $_POST["bill"];
+      $tipPercentage = $_POST["tipPercentage"];
+      $tip = $bill * ($tipPercentage/100);
+      $people = $_POST["people"];
+      $share = ($bill + $tip) / $people;
+
+      echo "<h2>Results</h2>";
+      echo "The total tip bill is $bill. <br>";
+      echo "The total tip is $", $bill * ($tipPercentage/100), ". <br>";
+      echo "Your share of the bill is $",$share, "."; 
+    ?>
+  </div>
 
 </body>
 </html>
