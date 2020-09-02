@@ -19,9 +19,14 @@
     $<input type="float" name="bill"/>
     <br><br>
 
-    What percentage would you like to tip?
+    How was your service?
     <br>
-    <input type="float" name="tipPercentage"/>%
+    <select name="service" id="">
+      <option value="great">Great!</option>
+      <option value="good">Good</option>
+      <option value="okay">Okay</option>
+      <option value="bad">Bad</option>
+    </select>
     <br><br>
 
     How many people are in your group?
@@ -39,14 +44,25 @@
   <div class="results">
     <?php 
       $bill = $_POST["bill"];
-      $tipPercentage = $_POST["tipPercentage"];
-      $tip = $bill * ($tipPercentage/100);
+
+      $tipPercentage;
+      if ($service == "great") {
+        $tipPercentage = 20;
+      } else if ($service == "good") {
+        $tipPercentage = 18.5;
+      } else if ($service == "okay") {
+        $tipPercentage = 17;
+      } else $tipPercentage = 15;
+
+      $tip = round($bill * ($tipPercentage/100), 2);
       $people = $_POST["people"];
-      $share = ($bill + $tip) / $people;
+      $share = round((($bill + $tip) / $people), 2);
+      $service = $_POST["service"];
 
       echo "<h2>Results</h2>";
-      echo "The total tip bill is $bill. <br>";
-      echo "The total tip is $", $bill * ($tipPercentage/100), ". <br>";
+      echo "The service was $service. <br>";
+      echo "The total bill is $$bill. <br>";
+      echo "The total tip is $$tip. <br>";
       echo "Your share of the bill is $",$share, "."; 
     ?>
   </div>
